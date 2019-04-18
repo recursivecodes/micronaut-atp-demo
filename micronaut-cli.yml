@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: codes.recursive.gorm.atp
+---
+testFramework: spock
+sourceLanguage: groovy

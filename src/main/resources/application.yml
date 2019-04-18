@@ -1,0 +1,14 @@
+micronaut:
+  application:
+    name: micronaut-atp-demo
+dataSource:
+  pooled: true
+  dbCreate: validate
+  driverClassName: oracle.jdbc.driver.OracleDriver
+hibernate:
+  dialect: org.hibernate.dialect.Oracle12cDialect
+  cache:
+    queries: false
+    use_second_level_cache: false
+    use_query_cache: false
+    region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
