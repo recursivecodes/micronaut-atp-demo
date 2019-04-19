@@ -14,5 +14,6 @@ abstract class PersonService {
     abstract List<Person> findAll(Map args)
     abstract Person find(@NotNull Long id)
     abstract Person save(Person person)
+    abstract Person update(@NotNull Long id, @NotNull String firstName, @NotNull String lastName)
     abstract Person delete(@NotNull Long id)
 }

@@ -10,6 +10,7 @@ import io.micronaut.http.annotation.Delete
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Put
 import org.grails.datastore.mapping.validation.ValidationException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -51,6 +52,28 @@ class PersonController {
     HttpResponse<Map> savePerson(@Body Person person) {
         try {
             return HttpResponse.ok( [ person: personService.save(person) ] as Map )
+        }
+        catch(ValidationException e) {
+            return HttpResponse.unprocessableEntity().body(
+                    [
+                            person: person,
+                            errors: e.errors.allErrors.collect {
+                                FieldError err = it as FieldError
+                                [
+                                        field: err.field,
+                                        rejectedValue: err.rejectedValue,
+                                        message: err.defaultMessage
+                                ]
+                            }
+                    ]
+            ) as HttpResponse<Map>
+        }
+    }
+
+    @Put("/update")
+    HttpResponse<Map> updatePerson(@Body Person person) {
+        try {
+            return HttpResponse.ok( [ person: personService.update(person.id, person.firstName, person.lastName) ] as Map )
         }
         catch(ValidationException e) {
             return HttpResponse.unprocessableEntity().body(

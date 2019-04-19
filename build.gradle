@@ -5,8 +5,6 @@ plugins {
     id "application"
 }
 
-
-
 version "0.1"
 group "codes.recursive.gorm.atp"
 
@@ -70,3 +68,9 @@ task myRun(type: JavaExec){
     main = mainClassName
     systemProperties = System.properties
 }
+task copyResources(type:Copy) {
+    from "build-resource"
+    into "build"
+}
+
+assemble.dependsOn copyResources
