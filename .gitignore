@@ -12,3 +12,5 @@ out/
 .settings
 .classpath
 build-resource/
+env.sh
+run.sh
