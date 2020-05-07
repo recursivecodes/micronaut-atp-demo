@@ -11,11 +11,14 @@ group "codes.recursive.gorm.atp"
 repositories {
     mavenCentral()
     maven { url "https://jcenter.bintray.com" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://dl.bintray.com/grails/grails-core/" }
+
 }
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.1.0'
+        mavenBom 'io.micronaut:micronaut-bom:2.0.0.M3'
     }
 }
 
@@ -26,7 +29,10 @@ configurations {
 
 dependencies {
     compile 'io.micronaut.configuration:micronaut-hibernate-gorm'
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.oracle.database.jdbc:ojdbc8:19.6.0.0'
+
+    compile "io.micronaut.graphql:micronaut-graphql:1.0.0"
+    compile "io.micronaut.graphql:micronaut-graphql-gorm:1.1.0"
     
     compile "io.micronaut:micronaut-http-client"
     compile "io.micronaut:micronaut-http-server-netty"

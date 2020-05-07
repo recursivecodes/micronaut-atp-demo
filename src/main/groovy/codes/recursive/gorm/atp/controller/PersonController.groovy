@@ -1,16 +1,13 @@
 package codes.recursive.gorm.atp.controller
 
+
 import codes.recursive.gorm.atp.model.Person
+import codes.recursive.gorm.atp.model.dto.PersonDTO
 import codes.recursive.gorm.atp.service.PersonService
 import groovy.transform.CompileStatic
 import io.micronaut.http.HttpResponse
-import io.micronaut.http.annotation.Body
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Delete
-import io.micronaut.http.annotation.Get
 import io.micronaut.http.HttpStatus
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Put
+import io.micronaut.http.annotation.*
 import org.grails.datastore.mapping.validation.ValidationException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -33,19 +30,21 @@ class PersonController {
     @Inject PersonService personService
 
     @Get("/list{/offset}{/max}")
-    List<Person> getPersons(@Nullable Optional<Integer> offset, @Nullable Optional<Integer> max) {
+    List<PersonDTO> getPersons(@Nullable Optional<Integer> offset, @Nullable Optional<Integer> max) {
+        List<PersonDTO> persons = []
         if( offset && max ) {
-            return personService.findAll([offset: offset.get(), max: max.get()])
+            persons = personService.findAllDtos([offset: offset.get(), max: max.get()])
         }
         else {
-            return personService.findAll()
+            persons = personService.findAllDtos()
         }
+        return persons
     }
 
 
     @Get("/get/{id}")
     Person getPerson(int id) {
-        return personService.find(id)
+        return personService.find(id).first()
     }
 
     @Post("/save")
